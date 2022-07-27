@@ -1,8 +1,15 @@
 import { describe, it, expect } from "vitest";
-import { parse } from "../parser";
+import { parse } from "../htmlParser";
 
 describe("parse", () => {
   it.each<{ source: string; expected: ToyNode }>([
+    {
+      source: "Hello, world!",
+      expected: {
+        node: "Hello, world!",
+        children: [],
+      },
+    },
     {
       source: `<div>Hello, world!</div>`,
       expected: {
