@@ -9,5 +9,5 @@ type ToyNodeType = ToyText | ToyElement;
 
 type ToyNode = {
   children: ToyNode[];
-  nodeType: ToyNodeType;
+  node: ToyNodeType;
 };

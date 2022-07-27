@@ -6,13 +6,13 @@ describe("parse", () => {
     {
       source: `<div>Hello, world!</div>`,
       expected: {
-        nodeType: {
+        node: {
           tagName: "div",
           attributes: {},
         },
         children: [
           {
-            nodeType: "Hello, world!",
+            node: "Hello, world!",
             children: [],
           },
         ],
@@ -21,31 +21,31 @@ describe("parse", () => {
     {
       source: `<div>Hello, world!</div><p>ryo</p>`,
       expected: {
-        nodeType: {
+        node: {
           tagName: "html",
           attributes: {},
         },
         children: [
           {
-            nodeType: {
+            node: {
               tagName: "div",
               attributes: {},
             },
             children: [
               {
-                nodeType: "Hello, world!",
+                node: "Hello, world!",
                 children: [],
               },
             ],
           },
           {
-            nodeType: {
+            node: {
               tagName: "p",
               attributes: {},
             },
             children: [
               {
-                nodeType: "ryo",
+                node: "ryo",
                 children: [],
               },
             ],
@@ -60,7 +60,7 @@ describe("parse", () => {
       </div>
       `,
       expected: {
-        nodeType: {
+        node: {
           tagName: "div",
           attributes: {
             id: "1",
@@ -68,13 +68,13 @@ describe("parse", () => {
         },
         children: [
           {
-            nodeType: {
+            node: {
               tagName: "p",
               attributes: {},
             },
             children: [
               {
-                nodeType: "Hello, world!",
+                node: "Hello, world!",
                 children: [],
               },
             ],

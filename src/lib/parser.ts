@@ -3,7 +3,7 @@ import assert from "assert";
 const createTextNode = (text: string): ToyNode => {
   return {
     children: [],
-    nodeType: text,
+    node: text,
   };
 };
 
@@ -14,7 +14,7 @@ const createElement = (
 ): ToyNode => {
   return {
     children,
-    nodeType: {
+    node: {
       tagName: name,
       attributes,
     },
@@ -22,33 +22,46 @@ const createElement = (
 };
 
 class Parser {
-  pos: number;
-  input: string;
+  private pos: number;
+  private input: string;
 
   constructor(input: string) {
     this.pos = 0;
     this.input = input;
   }
 
-  nextChar(): string {
-    return this.input.slice(this.pos, this.pos + 1);
+  parseNodes(): ToyNode[] {
+    const nodes: ToyNode[] = [];
+    while (true) {
+      this.consumeWhiteSpace();
+      if (this.eof() || this.startWith("</")) {
+        break;
+      }
+      nodes.push(this.parseNode());
+    }
+
+    return nodes;
   }
 
-  startWith(s: string): boolean {
-    return this.input.slice(this.pos).startsWith(s);
+  private nextChar(): string {
+    return this.input.substring(this.pos, this.pos + 1);
   }
 
-  eof(): boolean {
+  private startWith(s: string): boolean {
+    return this.input.substring(this.pos).startsWith(s);
+  }
+
+  private eof(): boolean {
     return this.pos >= this.input.length;
   }
 
-  consumeChar(): string {
-    const c = this.input.slice(this.pos, this.pos + 1);
+  private consumeChar(): string {
+    const c = this.input.substring(this.pos, this.pos + 1);
     this.pos++;
     return c;
   }
 
-  consumeWhile(test: (n: string) => boolean): string {
+  private consumeWhile(test: (n: string) => boolean): string {
     let result = "";
     while (!this.eof() && test(this.nextChar())) {
       result += this.consumeChar();
@@ -56,23 +69,23 @@ class Parser {
     return result;
   }
 
-  consumeWhiteSpace(): void {
+  private consumeWhiteSpace(): void {
     this.consumeWhile((c) => /\s/.test(c));
   }
 
-  parseTagName(): string {
+  private parseTagName(): string {
     return this.consumeWhile((c) => /\w/.test(c));
   }
 
-  parseNode(): ToyNode {
+  private parseNode(): ToyNode {
     return this.nextChar() === "<" ? this.parseElement() : this.parseText();
   }
 
-  parseText(): ToyNode {
+  private parseText(): ToyNode {
     return createTextNode(this.consumeWhile((c) => c != "<"));
   }
 
-  parseElement(): ToyNode {
+  private parseElement(): ToyNode {
     assert(this.consumeChar() === "<");
     const tagName = this.parseTagName();
     const attrs = this.parseAttributes();
@@ -88,14 +101,14 @@ class Parser {
     return createElement(tagName, attrs, children);
   }
 
-  parseAttr(): Record<string, string> {
+  private parseAttr(): Record<string, string> {
     const name = this.parseTagName();
     assert(this.consumeChar() === "=");
     const value = this.parseAttrValue();
     return { name, value };
   }
 
-  parseAttrValue(): string {
+  private parseAttrValue(): string {
     const openQuote = this.consumeChar();
     assert(openQuote === '"' || openQuote === "'");
     const value = this.consumeWhile((c) => c !== openQuote);
@@ -103,7 +116,7 @@ class Parser {
     return value;
   }
 
-  parseAttributes(): Record<string, string> {
+  private parseAttributes(): Record<string, string> {
     const attributes: Record<string, string> = {};
     while (true) {
       this.consumeWhiteSpace();
@@ -114,19 +127,6 @@ class Parser {
       attributes[name] = value;
     }
     return attributes;
-  }
-
-  parseNodes(): ToyNode[] {
-    const nodes: ToyNode[] = [];
-    while (true) {
-      this.consumeWhiteSpace();
-      if (this.eof() || this.startWith("</")) {
-        break;
-      }
-      nodes.push(this.parseNode());
-    }
-
-    return nodes;
   }
 }
 
