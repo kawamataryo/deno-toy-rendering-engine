@@ -13,34 +13,35 @@ type ToyNode = {
 };
 
 type Stylesheet = {
-  rules: Rule
-}
+  rules: Rule[];
+};
 
 type Rule = {
-  selectors: Selector[]
-  declarations: Declaration[]
-}
+  selectors: Selector[];
+  declarations: Declaration[];
+};
 
 type Selector = {
-  tagName?: string,
-  id?: string,
-  class?: string
-}
+  type: "tag" | "id" | "class";
+  name: string;
+};
 
 type Declaration = {
   name: string;
   value: Value;
-}
+};
 
-type Value = Keyword | Color | Length | Percentage;
+type Value = Keyword | Color | Length;
 
 type Keyword = string;
 
-type Length = [number, 'px' | 'em' | 'rem' | 'vh' | 'vw' | 'vmin' | 'vmax'];
+type Length = [number, Unit];
 
-type ColorValue = {
+type Unit = "px" | "em" | "rem" | "vh" | "vw" | "vmin" | "vmax";
+
+type Color = {
   r: number;
   g: number;
   b: number;
   a: number;
-}
+};

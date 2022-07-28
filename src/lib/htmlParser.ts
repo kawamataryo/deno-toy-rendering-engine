@@ -21,7 +21,7 @@ const createElement = (
   };
 };
 
-class Parser {
+class HtmlParser {
   private pos: number;
   private input: string;
 
@@ -131,7 +131,7 @@ class Parser {
 }
 
 export const parse = (source: string): ToyNode => {
-  const nodes = new Parser(source).parseNodes();
+  const nodes = new HtmlParser(source).parseNodes();
   if (nodes.length === 1) {
     return nodes[0];
   } else {

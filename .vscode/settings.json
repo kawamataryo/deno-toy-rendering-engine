@@ -1,5 +1,6 @@
 {
   "vitest.enable": true,
   "vitest.commandLine": "npm run test",
-  "testing.automaticallyOpenPeekView": "never"
+  "testing.automaticallyOpenPeekView": "never",
+  "editor.formatOnSave": true
 }
