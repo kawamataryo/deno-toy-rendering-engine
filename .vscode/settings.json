@@ -4,7 +4,6 @@
   "deno.codeLens.referencesAllFunctions": true,
   "deno.codeLens.test": true,
   "deno.enable": true,
-  "deno.path": "/Users/kawamataryou/.deno/bin/deno",
   "deno.unstable": true,
   "deno.importMap": "./import_maps.json"
 }
