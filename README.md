@@ -37,6 +37,6 @@ deno lint
 - 2022/07/27: create HTML parser.
   ([reference](https://limpet.net/mbrubeck/2014/08/11/toy-layout-engine-2.html))
 - 2022/07/29: create CSS parser.
-  ([reference](https://limpet.net/mbrubeck/2014/08/11/toy-layout-engine-3.html))
+  ([reference](https://limpet.net/mbrubeck/2014/08/13/toy-layout-engine-3-css.html))
 - 2022/07/29: migrate to Deno
 - 2022/07/30: refactor to Deno way
