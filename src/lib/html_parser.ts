@@ -4,7 +4,7 @@ import "../types/types.d.ts";
 const createTextNode = (text: string): ToyNode => {
   return {
     children: [],
-    node: text,
+    nodeType: text,
   };
 };
 
@@ -15,7 +15,7 @@ const createElement = (
 ): ToyNode => {
   return {
     children,
-    node: {
+    nodeType: {
       tagName: name,
       attributes,
     },

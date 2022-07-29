@@ -9,7 +9,7 @@ type ToyNodeType = ToyText | ToyElement;
 
 type ToyNode = {
   children: ToyNode[];
-  node: ToyNodeType;
+  nodeType: ToyNodeType;
 };
 
 type Stylesheet = {
@@ -45,3 +45,11 @@ type Color = {
   b: number;
   a: number;
 };
+
+type PropertyMap = Record<string, Declaration[]>
+
+type StyledNode = {
+  node: ToyNodeType;
+  specificValues: PropertyMap;
+  children: StyledNode[];
+}

@@ -4,7 +4,7 @@ import { assertObjectMatch } from "std/testing/asserts";
 Deno.test("simple text node", () => {
   const result = parse("Hello, world!");
   assertObjectMatch(result, {
-    node: "Hello, world!",
+    nodeType: "Hello, world!",
     children: [],
   });
 });
@@ -12,13 +12,13 @@ Deno.test("simple text node", () => {
 Deno.test("simple element node", () => {
   const result = parse("<div>Hello, world!</div>");
   assertObjectMatch(result, {
-    node: {
+    nodeType: {
       tagName: "div",
       attributes: {},
     },
     children: [
       {
-        node: "Hello, world!",
+        nodeType: "Hello, world!",
         children: [],
       },
     ],
@@ -32,7 +32,7 @@ Deno.test("nested element node", () => {
     </div>
   `);
   assertObjectMatch(result, {
-    node: {
+    nodeType: {
       tagName: "div",
       attributes: {
         id: "1",
@@ -40,13 +40,13 @@ Deno.test("nested element node", () => {
     },
     children: [
       {
-        node: {
+        nodeType: {
           tagName: "p",
           attributes: {},
         },
         children: [
           {
-            node: "Hello, world!",
+            nodeType: "Hello, world!",
             children: [],
           },
         ],
@@ -61,31 +61,31 @@ Deno.test("multiple element node", () => {
     <p>ryo</p>
   `);
   assertObjectMatch(result, {
-    node: {
+    nodeType: {
       tagName: "html",
       attributes: {},
     },
     children: [
       {
-        node: {
+        nodeType: {
           tagName: "div",
           attributes: {},
         },
         children: [
           {
-            node: "Hello, world!",
+            nodeType: "Hello, world!",
             children: [],
           },
         ],
       },
       {
-        node: {
+        nodeType: {
           tagName: "p",
           attributes: {},
         },
         children: [
           {
-            node: "ryo",
+            nodeType: "ryo",
             children: [],
           },
         ],
