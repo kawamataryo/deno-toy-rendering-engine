@@ -1,4 +1,4 @@
-import { assert } from "https://deno.land/std@0.83.0/testing/asserts.ts";
+import { assert } from "std/testing/asserts";
 import "../types.d.ts";
 
 class CssParser {

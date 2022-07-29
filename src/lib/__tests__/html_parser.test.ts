@@ -1,5 +1,5 @@
-import { parse } from "../htmlParser.ts";
-import { assertObjectMatch } from "https://deno.land/std@0.150.0/testing/asserts.ts";
+import { parse } from "../html_parser.ts";
+import { assertObjectMatch } from "std/testing/asserts";
 
 Deno.test("simple text node", () => {
   const result = parse("Hello, world!");
