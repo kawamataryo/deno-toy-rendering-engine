@@ -1,8 +1,4 @@
 {
-  "vitest.enable": true,
-  "vitest.commandLine": "npm run test",
-  "testing.automaticallyOpenPeekView": "never",
-  "editor.formatOnSave": true,
   "deno.codeLens.implementations": true,
   "deno.codeLens.references": true,
   "deno.codeLens.referencesAllFunctions": true,
