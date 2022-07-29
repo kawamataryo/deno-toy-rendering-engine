@@ -1,4 +1,5 @@
-import assert from "assert";
+import { assert } from "https://deno.land/std@0.83.0/testing/asserts.ts";
+import "../types.d.ts";
 
 const createTextNode = (text: string): ToyNode => {
   return {
@@ -10,7 +11,7 @@ const createTextNode = (text: string): ToyNode => {
 const createElement = (
   name: string,
   attributes: Record<string, string>,
-  children: ToyNode[]
+  children: ToyNode[],
 ): ToyNode => {
   return {
     children,

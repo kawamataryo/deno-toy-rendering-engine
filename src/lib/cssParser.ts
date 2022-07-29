@@ -1,163 +1,163 @@
-import assert from "assert";
+import { assert } from "https://deno.land/std@0.83.0/testing/asserts.ts";
+import "../types.d.ts";
 
 class CssParser {
-  pos: number
-  source: string
+  pos: number;
+  source: string;
 
   constructor(source: string) {
-    this.pos = 0
-    this.source = source
+    this.pos = 0;
+    this.source = source;
   }
 
   consumeChar() {
-    const c = this.source.substring(this.pos, this.pos + 1)
-    this.pos++
-    return c
+    const c = this.source.substring(this.pos, this.pos + 1);
+    this.pos++;
+    return c;
   }
 
   nextChar() {
-    return this.source.substring(this.pos, this.pos + 1)
+    return this.source.substring(this.pos, this.pos + 1);
   }
 
   consumeWhile(predicate: (char: string) => boolean) {
-    let result = ''
+    let result = "";
     while (predicate(this.nextChar())) {
-      result += this.consumeChar()
+      result += this.consumeChar();
     }
-    return result
+    return result;
   }
 
   consumeWhitespace() {
-    this.consumeWhile(char => /\s/.test(char))
+    this.consumeWhile((char) => /\s/.test(char));
   }
 
   consumeComma() {
-    if (this.nextChar() === ',') {
-      this.consumeChar()
+    if (this.nextChar() === ",") {
+      this.consumeChar();
     }
   }
 
   isEof() {
-    return this.pos >= this.source.length
+    return this.pos >= this.source.length;
   }
 
-
   parseSelector(): Selector {
-    const nextChar = this.nextChar()
-    let sectorHeadSymbol = ''
-    if (nextChar === '.' || nextChar === '#') {
-      sectorHeadSymbol = this.consumeChar()
+    const nextChar = this.nextChar();
+    let sectorHeadSymbol = "";
+    if (nextChar === "." || nextChar === "#") {
+      sectorHeadSymbol = this.consumeChar();
     }
-    const selectorName = this.consumeWhile(char => /[\w_-]/.test(char))
+    const selectorName = this.consumeWhile((char) => /[\w_-]/.test(char));
 
     switch (sectorHeadSymbol) {
-      case '.':
+      case ".":
         return {
           type: "class",
           name: selectorName,
-        }
-      case '#':
+        };
+      case "#":
         return {
           type: "id",
           name: selectorName,
-        }
+        };
       default:
         return {
           type: "tag",
           name: selectorName,
-        }
+        };
     }
   }
 
   parseSelectors() {
-    const selectors: Selector[] = []
+    const selectors: Selector[] = [];
     while (true) {
-      this.consumeWhitespace()
-      if (this.nextChar() === '{') {
-        break
+      this.consumeWhitespace();
+      if (this.nextChar() === "{") {
+        break;
       }
-      selectors.push(this.parseSelector())
-      this.consumeComma()
+      selectors.push(this.parseSelector());
+      this.consumeComma();
     }
-    return selectors
+    return selectors;
   }
 
   parseLength(): Length {
-    const num = this.consumeWhile(char => /\d/.test(char))
-    const unit = this.consumeWhile(char => /[a-zA-Z]/.test(char))
-    return [Number(num), unit as Unit]
+    const num = this.consumeWhile((char) => /\d/.test(char));
+    const unit = this.consumeWhile((char) => /[a-zA-Z]/.test(char));
+    return [Number(num), unit as Unit];
   }
 
   parseColor(): Color {
-    assert(this.consumeChar() === '#')
-    const consumeNumber = () => Number(this.consumeChar())
+    assert(this.consumeChar() === "#");
+    const consumeNumber = () => Number(this.consumeChar());
     return {
       r: consumeNumber(),
       g: consumeNumber(),
       b: consumeNumber(),
       a: consumeNumber(),
-    }
+    };
   }
 
   parseValue() {
-    this.consumeWhitespace()
-    const nextC = this.nextChar()
+    this.consumeWhitespace();
+    const nextC = this.nextChar();
     switch (true) {
       case /\d/.test(nextC):
-        return this.parseLength()
+        return this.parseLength();
       case /#/.test(nextC):
-        return this.parseColor()
+        return this.parseColor();
       default:
-        return this.consumeWhile(char => /[a-zA-Z]/.test(char))
+        return this.consumeWhile((char) => /[a-zA-Z]/.test(char));
     }
   }
 
   parseDeclaration() {
-    const name = this.consumeWhile(char => /[a-zA-Z-]/.test(char))
-    this.consumeWhitespace()
-    assert(this.nextChar() === ":")
-    this.consumeChar()
-    const value = this.parseValue()
+    const name = this.consumeWhile((char) => /[a-zA-Z-]/.test(char));
+    this.consumeWhitespace();
+    assert(this.nextChar() === ":");
+    this.consumeChar();
+    const value = this.parseValue();
     return {
       name,
-      value
-    }
+      value,
+    };
   }
 
   parseDeclarations() {
-    const declarations = []
+    const declarations = [];
     while (true) {
-      this.consumeWhitespace()
-      if (this.nextChar() === '}') {
-        break
+      this.consumeWhitespace();
+      if (this.nextChar() === "}") {
+        break;
       }
-      declarations.push(this.parseDeclaration())
-      this.consumeWhitespace()
-      assert(this.nextChar() === ";")
-      this.consumeChar() // consume ";"
+      declarations.push(this.parseDeclaration());
+      this.consumeWhitespace();
+      assert(this.nextChar() === ";");
+      this.consumeChar(); // consume ";"
     }
-    return declarations
+    return declarations;
   }
 
   parse(): Stylesheet {
-    const rules: Rule[] = []
+    const rules: Rule[] = [];
     while (true) {
-      this.consumeWhitespace()
+      this.consumeWhitespace();
       if (this.isEof()) {
-        break
+        break;
       }
-      const selectors = this.parseSelectors()
-      this.consumeChar() // consume '{'
-      const declarations = this.parseDeclarations()
-      this.consumeChar() // consume '}'
+      const selectors = this.parseSelectors();
+      this.consumeChar(); // consume '{'
+      const declarations = this.parseDeclarations();
+      this.consumeChar(); // consume '}'
       rules.push({
         selectors,
-        declarations
-      })
+        declarations,
+      });
     }
     return {
       rules,
-    }
+    };
   }
 }
 

@@ -1,35 +1,34 @@
-import { describe, it, expect } from "vitest";
-import { parse } from "../cssParser";
+import { parse } from "../cssParser.ts";
+import { assertObjectMatch } from "https://deno.land/std@0.150.0/testing/asserts.ts";
 
-describe("parse", () => {
-  it.each<{ source: string, expected: Stylesheet }>([
-    {
-      source: `
+Deno.test("simple css", () => {
+  const result = parse(`
         h1 {
           color: red;
         }
-      `,
-      expected: {
-        rules: [
+  `);
+  assertObjectMatch(result, {
+    rules: [
+      {
+        selectors: [
           {
-            selectors: [
-              {
-                type: "tag",
-                name: "h1"
-              },
-            ],
-            declarations: [
-              {
-                name: 'color',
-                value: "red"
-              }
-            ]
+            type: "tag",
+            name: "h1",
           },
-        ]
-      }
-    },
-    {
-      source: `
+        ],
+        declarations: [
+          {
+            name: "color",
+            value: "red",
+          },
+        ],
+      },
+    ],
+  });
+});
+
+Deno.test("multiple css", () => {
+  const result = parse(`
         td {
           display: block;
         }
@@ -37,54 +36,49 @@ describe("parse", () => {
           color: red;
           font-size: 1em;
         }
-      `,
-      expected: {
-        rules: [
+  `);
+  assertObjectMatch(result, {
+    rules: [
+      {
+        selectors: [
           {
-            selectors: [
-              {
-                type: "tag",
-                name: "td"
-              },
-            ],
-            declarations: [
-              {
-                name: 'display',
-                value: "block"
-              },
-            ]
+            type: "tag",
+            name: "td",
+          },
+        ],
+        declarations: [
+          {
+            name: "display",
+            value: "block",
+          },
+        ],
+      },
+      {
+        selectors: [
+          {
+            type: "tag",
+            name: "h1",
           },
           {
-            selectors: [
-              {
-                type: "tag",
-                name: "h1"
-              },
-              {
-                type: "class",
-                name: "foo"
-              },
-              {
-                type: "id",
-                name: "aaa"
-              }
-            ],
-            declarations: [
-              {
-                name: 'color',
-                value: "red"
-              },
-              {
-                name: 'font-size',
-                value: [1, "em"]
-              }
-            ]
+            type: "class",
+            name: "foo",
           },
-        ]
-      }
-    }
-  ])("should parse text", ({ source, expected }) => {
-    const node = parse(source);
-    expect(node).toMatchObject(expected);
+          {
+            type: "id",
+            name: "aaa",
+          },
+        ],
+        declarations: [
+          {
+            name: "color",
+            value: "red",
+          },
+          {
+            name: "font-size",
+            value: [1, "em"],
+          },
+        ],
+      },
+    ],
   });
 });
