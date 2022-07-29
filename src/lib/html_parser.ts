@@ -1,5 +1,5 @@
 import { assert } from "std/testing/asserts";
-import "../types.d.ts";
+import "../types/types.d.ts";
 
 const createTextNode = (text: string): ToyNode => {
   return {

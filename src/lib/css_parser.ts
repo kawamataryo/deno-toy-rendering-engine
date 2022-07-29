@@ -1,5 +1,5 @@
 import { assert } from "std/testing/asserts";
-import "../types.d.ts";
+import "../types/types.d.ts";
 
 class CssParser {
   pos: number;
@@ -89,13 +89,18 @@ class CssParser {
   }
 
   parseColor(): Color {
+    const parseHexPair = () => {
+      const a = this.consumeChar();
+      const b = this.consumeChar();
+      return parseInt(`${a}${b}`, 16);
+    };
+
     assert(this.consumeChar() === "#");
-    const consumeNumber = () => Number(this.consumeChar());
     return {
-      r: consumeNumber(),
-      g: consumeNumber(),
-      b: consumeNumber(),
-      a: consumeNumber(),
+      r: parseHexPair(),
+      g: parseHexPair(),
+      b: parseHexPair(),
+      a: 255,
     };
   }
 

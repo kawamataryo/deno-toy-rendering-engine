@@ -35,6 +35,7 @@ Deno.test("multiple css", () => {
         h1, .foo, #aaa {
           color: red;
           font-size: 1em;
+          background: #ffee12;
         }
   `);
   assertObjectMatch(result, {
