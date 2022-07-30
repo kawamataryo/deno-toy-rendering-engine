@@ -1,6 +1,7 @@
 # Deno Toy Browser Engine
 
-A simple HTML rendering engine made by Deno created based on "[Let's build a browser engine!](https://limpet.net/mbrubeck/2014/08/08/toy-layout-engine-1.html)"
+A simple HTML rendering engine made by Deno. Created based on
+"[Let's build a browser engine!](https://limpet.net/mbrubeck/2014/08/08/toy-layout-engine-1.html)"
 
 ## Development
 
@@ -39,4 +40,5 @@ deno lint
   ([reference](https://limpet.net/mbrubeck/2014/08/13/toy-layout-engine-3-css.html))
 - 2022/07/29: migrate to Deno
 - 2022/07/30: refactor to Deno way
-- 2022/07/30: create Styled Tree([reference](https://limpet.net/mbrubeck/2014/08/23/toy-layout-engine-4-style.html))
+- 2022/07/30: create Styled
+  Tree([reference](https://limpet.net/mbrubeck/2014/08/23/toy-layout-engine-4-style.html))
