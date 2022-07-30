@@ -2,7 +2,11 @@ import "../../types/types.d.ts";
 import { assertEquals } from "std/testing/asserts";
 import { parse as parseHtml } from "../html_parser.ts";
 import { parse as parseCss } from "../css_parser.ts";
-import { createStyledTree, matches } from "../create_styled_tree.ts";
+import {
+  createStyledTree,
+  matches,
+  sortStylesheetByDetail,
+} from "../create_styled_tree.ts";
 
 Deno.test("matches", async (t) => {
   const testCase: {
@@ -74,6 +78,92 @@ Deno.test("matches", async (t) => {
   }
 });
 
+Deno.test("splitStylesheetPerSelectorType", () => {
+  const stylesheet = parseCss(`
+      h1, #foo {
+        color: red;
+      }
+      .bar, p {
+        font-size: 20px;
+        display: block;
+      }
+  `);
+  assertEquals(sortStylesheetByDetail(stylesheet), {
+    rules: [
+      {
+        declarations: [
+          {
+            name: "color",
+            value: "red",
+          },
+        ],
+        selectors: [
+          {
+            name: "h1",
+            type: "tag",
+          },
+        ],
+      },
+      {
+        declarations: [
+          {
+            name: "font-size",
+            value: [
+              20,
+              "px",
+            ],
+          },
+          {
+            name: "display",
+            value: "block",
+          },
+        ],
+        selectors: [
+          {
+            name: "p",
+            type: "tag",
+          },
+        ],
+      },
+      {
+        declarations: [
+          {
+            name: "font-size",
+            value: [
+              20,
+              "px",
+            ],
+          },
+          {
+            name: "display",
+            value: "block",
+          },
+        ],
+        selectors: [
+          {
+            name: "bar",
+            type: "class",
+          },
+        ],
+      },
+      {
+        declarations: [
+          {
+            name: "color",
+            value: "red",
+          },
+        ],
+        selectors: [
+          {
+            name: "foo",
+            type: "id",
+          },
+        ],
+      },
+    ],
+  });
+});
+
 Deno.test("createStyledTree", async (t) => {
   const testCase: {
     case: { title: string; html: string; css: string };
@@ -117,6 +207,30 @@ Deno.test("createStyledTree", async (t) => {
         node: { tagName: "h1", attributes: { id: "headline" } },
         specificValues: {
           color: "red",
+        },
+        children: [],
+      },
+    },
+    {
+      case: {
+        title: "Adapting a highly detailed style",
+        html: "<h1 id='id' class='class'></h1>",
+        css: `
+          h1 {
+            color: red;
+          }
+          #id {
+            color: blue;
+          }
+          .class {
+            color: green;
+          }
+        `,
+      },
+      expected: {
+        node: { tagName: "h1", attributes: { id: "id", class: "class" } },
+        specificValues: {
+          color: "blue",
         },
         children: [],
       },

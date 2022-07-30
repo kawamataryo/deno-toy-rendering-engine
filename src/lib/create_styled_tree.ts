@@ -35,13 +35,44 @@ const createSpecificValues = (
   }, {});
 };
 
+export const sortStylesheetByDetail = (stylesheet: Stylesheet): Stylesheet => {
+  // split stylesheet per selectorType
+  const stylesheetHash = stylesheet.rules.reduce<
+    { [selectorType: string]: Stylesheet }
+  >((result, rule) => {
+    rule.selectors.forEach((selector) => {
+      if (!result[selector.type]) {
+        result[selector.type] = {
+          rules: [],
+        };
+      }
+      result[selector.type].rules.push({
+        selectors: [selector],
+        declarations: rule.declarations,
+      });
+    });
+    return result;
+  }, {});
+
+  return {
+    // sort by selectors details
+    rules: [
+      ...stylesheetHash["tag"] ? stylesheetHash["tag"].rules : [],
+      ...stylesheetHash["class"] ? stylesheetHash["class"].rules : [],
+      ...stylesheetHash["id"] ? stylesheetHash["id"].rules : [],
+    ],
+  };
+};
+
 export const createStyledTree = (
   node: ToyNode,
   stylesheet: Stylesheet,
 ): StyledNode => {
+  const sortedStylesheet = sortStylesheetByDetail(stylesheet);
+
   return {
     node: node.nodeType,
-    specificValues: createSpecificValues(node.nodeType, stylesheet),
+    specificValues: createSpecificValues(node.nodeType, sortedStylesheet),
     children: node.children.map((n) => createStyledTree(n, stylesheet)),
   };
 };

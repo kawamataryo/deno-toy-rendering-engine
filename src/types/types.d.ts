@@ -16,6 +16,11 @@ type Stylesheet = {
   rules: Rule[];
 };
 
+type StylesheetPerSelectorType = {
+  selectorType: string;
+  stylesheet: Stylesheet;
+};
+
 type Rule = {
   selectors: Selector[];
   declarations: Declaration[];
