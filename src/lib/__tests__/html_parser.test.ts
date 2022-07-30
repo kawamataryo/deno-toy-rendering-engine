@@ -1,9 +1,9 @@
 import { parse } from "../html_parser.ts";
-import { assertObjectMatch } from "std/testing/asserts";
+import { assertEquals } from "std/testing/asserts";
 
 Deno.test("simple text node", () => {
   const result = parse("Hello, world!");
-  assertObjectMatch(result, {
+  assertEquals(result, {
     nodeType: "Hello, world!",
     children: [],
   });
@@ -11,7 +11,7 @@ Deno.test("simple text node", () => {
 
 Deno.test("simple element node", () => {
   const result = parse("<div>Hello, world!</div>");
-  assertObjectMatch(result, {
+  assertEquals(result, {
     nodeType: {
       tagName: "div",
       attributes: {},
@@ -31,7 +31,7 @@ Deno.test("nested element node", () => {
       <p>Hello, world!</p>
     </div>
   `);
-  assertObjectMatch(result, {
+  assertEquals(result, {
     nodeType: {
       tagName: "div",
       attributes: {
@@ -60,7 +60,7 @@ Deno.test("multiple element node", () => {
     <div>Hello, world!</div>
     <p>ryo</p>
   `);
-  assertObjectMatch(result, {
+  assertEquals(result, {
     nodeType: {
       tagName: "html",
       attributes: {},
@@ -89,6 +89,27 @@ Deno.test("multiple element node", () => {
             children: [],
           },
         ],
+      },
+    ],
+  });
+});
+
+Deno.test("element attribute", () => {
+  const result = parse(`
+    <div id="head" class="big-font black">Hello, world!</div>
+  `);
+  assertEquals(result, {
+    nodeType: {
+      tagName: "div",
+      attributes: {
+        id: "head",
+        class: "big-font black",
+      },
+    },
+    children: [
+      {
+        nodeType: "Hello, world!",
+        children: [],
       },
     ],
   });

@@ -1,5 +1,5 @@
 import { parse } from "../css_parser.ts";
-import { assertObjectMatch } from "std/testing/asserts";
+import { assertEquals } from "std/testing/asserts";
 
 Deno.test("simple css", () => {
   const result = parse(`
@@ -7,7 +7,7 @@ Deno.test("simple css", () => {
           color: red;
         }
   `);
-  assertObjectMatch(result, {
+  assertEquals(result, {
     rules: [
       {
         selectors: [
@@ -38,7 +38,7 @@ Deno.test("multiple css", () => {
           background: #ffee12;
         }
   `);
-  assertObjectMatch(result, {
+  assertEquals(result, {
     rules: [
       {
         selectors: [
