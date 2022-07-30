@@ -113,7 +113,7 @@ class CssParser {
       case /#/.test(nextC):
         return this.parseColor();
       default:
-        return this.consumeWhile((char) => /[a-zA-Z]/.test(char));
+        return this.consumeWhile((char) => /[a-zA-Z-]/.test(char));
     }
   }
 

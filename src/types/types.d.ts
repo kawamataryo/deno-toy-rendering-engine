@@ -46,10 +46,10 @@ type Color = {
   a: number;
 };
 
-type PropertyMap = Record<string, Declaration[]>
+type PropertyMap = Record<string, Value>;
 
 type StyledNode = {
   node: ToyNodeType;
   specificValues: PropertyMap;
   children: StyledNode[];
-}
+};
