@@ -40,3 +40,4 @@ deno lint
   ([reference](https://limpet.net/mbrubeck/2014/08/13/toy-layout-engine-3-css.html))
 - 2022/07/29: migrate to Deno
 - 2022/07/30: refactor to Deno way
+- 2022/07/30: create Styled Tree([reference](https://limpet.net/mbrubeck/2014/08/23/toy-layout-engine-4-style.html))
