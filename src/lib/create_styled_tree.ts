@@ -64,15 +64,23 @@ export const sortStylesheetByDetail = (stylesheet: Stylesheet): Stylesheet => {
   };
 };
 
+export class StyledNode implements StyledNodeInterface {
+  node: ToyNodeType;
+  specificValues: PropertyMap;
+  children: StyledNode[];
+
+  constructor(node: ToyNode, stylesheet: Stylesheet) {
+    this.node = node.nodeType,
+      this.specificValues = createSpecificValues(node.nodeType, stylesheet);
+    this.children = node.children.map((n) => new StyledNode(n, stylesheet));
+  }
+}
+
 export const createStyledTree = (
   node: ToyNode,
   stylesheet: Stylesheet,
 ): StyledNode => {
   const sortedStylesheet = sortStylesheetByDetail(stylesheet);
 
-  return {
-    node: node.nodeType,
-    specificValues: createSpecificValues(node.nodeType, sortedStylesheet),
-    children: node.children.map((n) => createStyledTree(n, stylesheet)),
-  };
+  return new StyledNode(node, sortedStylesheet);
 };

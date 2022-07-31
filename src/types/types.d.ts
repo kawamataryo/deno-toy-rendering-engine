@@ -53,8 +53,42 @@ type Color = {
 
 type PropertyMap = Record<string, Value>;
 
-type StyledNode = {
+type Dimensions = {
+  content: Rect;
+  padding: EdgeSizes;
+  border: EdgeSizes;
+  margin: EdgeSizes;
+};
+
+type Rect = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+type EdgeSizes = {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+};
+
+type LayoutBox = {
+  dimensions: Dimensions;
+  box: Box;
+  children: LayoutBox;
+};
+
+interface StyledNodeInterface {
   node: ToyNodeType;
   specificValues: PropertyMap;
-  children: StyledNode[];
+  children: StyledNodeInterface[];
+}
+
+type Box = {
+  type: DisplayType;
+  node: StyledNodeInterface;
 };
+
+type DisplayType = "inline" | "block" | "none";

@@ -6,6 +6,7 @@ import {
   createStyledTree,
   matches,
   sortStylesheetByDetail,
+  StyledNode,
 } from "../create_styled_tree.ts";
 
 Deno.test("matches", async (t) => {
@@ -165,6 +166,23 @@ Deno.test("splitStylesheetPerSelectorType", () => {
 });
 
 Deno.test("createStyledTree", async (t) => {
+  type ExpectedStyledNode = {
+    node: ToyNodeType;
+    specificValues: PropertyMap;
+    children: ExpectedStyledNode[];
+  };
+
+  const assertStyledNodeEquals = (
+    result: StyledNode,
+    expected: ExpectedStyledNode,
+  ): void => {
+    assertEquals(result.node, expected.node);
+    assertEquals(result.specificValues, expected.specificValues);
+    result.children.forEach((n, index) => {
+      assertStyledNodeEquals(n, expected.children[index]);
+    });
+  };
+
   const testCase: {
     case: { title: string; html: string; css: string };
     expected: StyledNode;
@@ -304,12 +322,11 @@ Deno.test("createStyledTree", async (t) => {
 
   for (const c of testCase) {
     await t.step(c.case.title, () => {
-      const node = parseHtml(c.case.html);
-      const stylesheet = parseCss(c.case.css);
-      assertEquals(
-        createStyledTree(node, stylesheet),
-        c.expected,
+      const result = createStyledTree(
+        parseHtml(c.case.html),
+        parseCss(c.case.css),
       );
+      assertStyledNodeEquals(result, c.expected);
     });
   }
 });
