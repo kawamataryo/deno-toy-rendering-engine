@@ -1,3 +1,4 @@
+import { SelectorType } from "../constants.ts";
 import "../types/types.d.ts";
 
 export const sortStylesheetByDetail = (stylesheet: Stylesheet): Stylesheet => {
@@ -22,9 +23,9 @@ export const sortStylesheetByDetail = (stylesheet: Stylesheet): Stylesheet => {
   return {
     // sort by selectors details
     rules: [
-      ...stylesheetHash["tag"] ? stylesheetHash["tag"].rules : [],
-      ...stylesheetHash["class"] ? stylesheetHash["class"].rules : [],
-      ...stylesheetHash["id"] ? stylesheetHash["id"].rules : [],
+      ...stylesheetHash[SelectorType.TAG] ? stylesheetHash[SelectorType.TAG].rules : [],
+      ...stylesheetHash[SelectorType.CLASS] ? stylesheetHash[SelectorType.CLASS].rules : [],
+      ...stylesheetHash[SelectorType.ID] ? stylesheetHash[SelectorType.ID].rules : [],
     ],
   };
 };
@@ -40,20 +41,28 @@ export class StyledNode implements StyledNodeInterface {
     this.children = node.children.map((n) => new StyledNode(n, stylesheet));
   }
 
+  value(name: string) {
+    return this.specificValues[name] ? this.specificValues[name] : null;
+  }
+
+  display(): DisplayType {
+    return this.value('display') ? this.value('display') as DisplayType : "inline"
+  }
+
   private matches(nodeType: ToyNodeType, selector: Selector): boolean {
     if (typeof nodeType === "string") {
       return false;
     }
-    if (selector.type === "tag" && nodeType.tagName === selector.name) {
+    if (selector.type === SelectorType.TAG && nodeType.tagName === selector.name) {
       return true;
     }
     if (
-      selector.type === "id" && nodeType.attributes?.id === selector.name
+      selector.type === SelectorType.ID && nodeType.attributes?.id === selector.name
     ) {
       return true;
     }
     if (
-      selector.type === "class" &&
+      selector.type === SelectorType.CLASS &&
       nodeType.attributes?.class?.split(" ").some((c) => c === selector.name)
     ) {
       return true;
@@ -76,7 +85,7 @@ export class StyledNode implements StyledNodeInterface {
   }
 }
 
-export const createStyledNode = (
+export const buildStyledTree = (
   node: ToyNode,
   stylesheet: Stylesheet,
 ): StyledNode => {
