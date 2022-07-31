@@ -2,168 +2,7 @@ import "../../types/types.d.ts";
 import { assertEquals } from "std/testing/asserts";
 import { parse as parseHtml } from "../html_parser.ts";
 import { parse as parseCss } from "../css_parser.ts";
-import {
-  createStyledTree,
-  matches,
-  sortStylesheetByDetail,
-  StyledNode,
-} from "../create_styled_tree.ts";
-
-Deno.test("matches", async (t) => {
-  const testCase: {
-    case: { title: string; nodeType: ToyNodeType; selector: Selector };
-    expected: boolean;
-  }[] = [
-    {
-      case: {
-        title: "tagname1",
-        nodeType: { tagName: "h1", attributes: {} },
-        selector: { type: "tag", name: "h1" },
-      },
-      expected: true,
-    },
-    {
-      case: {
-        title: "tagname2",
-        nodeType: { tagName: "h1", attributes: {} },
-        selector: { type: "tag", name: "p" },
-      },
-      expected: false,
-    },
-    {
-      case: {
-        title: "class1",
-        nodeType: { tagName: "h1", attributes: { class: "title" } },
-        selector: { type: "class", name: "title" },
-      },
-      expected: true,
-    },
-    {
-      case: {
-        title: "class2",
-        nodeType: { tagName: "h1", attributes: { class: "title detail" } },
-        selector: { type: "class", name: "detail" },
-      },
-      expected: true,
-    },
-    {
-      case: {
-        title: "class3",
-        nodeType: { tagName: "h1", attributes: { class: "title detail" } },
-        selector: { type: "class", name: "foo" },
-      },
-      expected: false,
-    },
-    {
-      case: {
-        title: "id1",
-        nodeType: { tagName: "h1", attributes: { id: "title", class: "foo" } },
-        selector: { type: "id", name: "title" },
-      },
-      expected: true,
-    },
-    {
-      case: {
-        title: "id2",
-        nodeType: { tagName: "h1", attributes: { id: "title" } },
-        selector: { type: "id", name: "foo" },
-      },
-      expected: false,
-    },
-  ];
-
-  for (const c of testCase) {
-    await t.step(c.case.title, () => {
-      assertEquals(matches(c.case.nodeType, c.case.selector), c.expected);
-    });
-  }
-});
-
-Deno.test("splitStylesheetPerSelectorType", () => {
-  const stylesheet = parseCss(`
-      h1, #foo {
-        color: red;
-      }
-      .bar, p {
-        font-size: 20px;
-        display: block;
-      }
-  `);
-  assertEquals(sortStylesheetByDetail(stylesheet), {
-    rules: [
-      {
-        declarations: [
-          {
-            name: "color",
-            value: "red",
-          },
-        ],
-        selectors: [
-          {
-            name: "h1",
-            type: "tag",
-          },
-        ],
-      },
-      {
-        declarations: [
-          {
-            name: "font-size",
-            value: [
-              20,
-              "px",
-            ],
-          },
-          {
-            name: "display",
-            value: "block",
-          },
-        ],
-        selectors: [
-          {
-            name: "p",
-            type: "tag",
-          },
-        ],
-      },
-      {
-        declarations: [
-          {
-            name: "font-size",
-            value: [
-              20,
-              "px",
-            ],
-          },
-          {
-            name: "display",
-            value: "block",
-          },
-        ],
-        selectors: [
-          {
-            name: "bar",
-            type: "class",
-          },
-        ],
-      },
-      {
-        declarations: [
-          {
-            name: "color",
-            value: "red",
-          },
-        ],
-        selectors: [
-          {
-            name: "foo",
-            type: "id",
-          },
-        ],
-      },
-    ],
-  });
-});
+import { createStyledNode, StyledNode } from "../styled_node.ts";
 
 Deno.test("createStyledTree", async (t) => {
   type ExpectedStyledNode = {
@@ -185,7 +24,7 @@ Deno.test("createStyledTree", async (t) => {
 
   const testCase: {
     case: { title: string; html: string; css: string };
-    expected: StyledNode;
+    expected: ExpectedStyledNode;
   }[] = [
     {
       case: {
@@ -322,7 +161,7 @@ Deno.test("createStyledTree", async (t) => {
 
   for (const c of testCase) {
     await t.step(c.case.title, () => {
-      const result = createStyledTree(
+      const result = createStyledNode(
         parseHtml(c.case.html),
         parseCss(c.case.css),
       );
