@@ -1,10 +1,10 @@
-import { SelectorType } from "../constants.ts";
-import "../types/types.d.ts";
+import { SELECTOR_TYPE } from './../constants.ts';
+import { DisplayType, PropertyMap, Selector, StyledNodeInterface, Stylesheet, ToyNode, ToyNodeType } from "../types/types.ts";
 
 export const sortStylesheetByDetail = (stylesheet: Stylesheet): Stylesheet => {
-  // split stylesheet per selectorType
+  // split stylesheet per selector type
   const stylesheetHash = stylesheet.rules.reduce<
-    { [selectorType: string]: Stylesheet }
+    { [SELECTOR_TYPE: string]: Stylesheet }
   >((result, rule) => {
     rule.selectors.forEach((selector) => {
       if (!result[selector.type]) {
@@ -23,9 +23,9 @@ export const sortStylesheetByDetail = (stylesheet: Stylesheet): Stylesheet => {
   return {
     // sort by selectors details
     rules: [
-      ...stylesheetHash[SelectorType.TAG] ? stylesheetHash[SelectorType.TAG].rules : [],
-      ...stylesheetHash[SelectorType.CLASS] ? stylesheetHash[SelectorType.CLASS].rules : [],
-      ...stylesheetHash[SelectorType.ID] ? stylesheetHash[SelectorType.ID].rules : [],
+      ...stylesheetHash[SELECTOR_TYPE.TAG] ? stylesheetHash[SELECTOR_TYPE.TAG].rules : [],
+      ...stylesheetHash[SELECTOR_TYPE.CLASS] ? stylesheetHash[SELECTOR_TYPE.CLASS].rules : [],
+      ...stylesheetHash[SELECTOR_TYPE.ID] ? stylesheetHash[SELECTOR_TYPE.ID].rules : [],
     ],
   };
 };
@@ -53,16 +53,16 @@ export class StyledNode implements StyledNodeInterface {
     if (typeof nodeType === "string") {
       return false;
     }
-    if (selector.type === SelectorType.TAG && nodeType.tagName === selector.name) {
+    if (selector.type === SELECTOR_TYPE.TAG && nodeType.tagName === selector.name) {
       return true;
     }
     if (
-      selector.type === SelectorType.ID && nodeType.attributes?.id === selector.name
+      selector.type === SELECTOR_TYPE.ID && nodeType.attributes?.id === selector.name
     ) {
       return true;
     }
     if (
-      selector.type === SelectorType.CLASS &&
+      selector.type === SELECTOR_TYPE.CLASS &&
       nodeType.attributes?.class?.split(" ").some((c) => c === selector.name)
     ) {
       return true;

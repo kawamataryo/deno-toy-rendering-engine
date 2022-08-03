@@ -1,8 +1,8 @@
-import "../../types/types.d.ts";
 import { assertEquals } from "std/testing/asserts";
 import { parse as parseHtml } from "../html_parser.ts";
 import { parse as parseCss } from "../css_parser.ts";
 import { buildStyledTree, StyledNode } from "../styled_node.ts";
+import { PropertyMap, ToyNodeType } from "../../types/types.ts";
 
 Deno.test("createStyledTree", async (t) => {
   type ExpectedStyledNode = {

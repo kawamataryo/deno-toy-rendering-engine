@@ -1,5 +1,7 @@
 import { assert } from "std/testing/asserts";
-import "../types/types.d.ts";
+import { SELECTOR_TYPE } from "../constants.ts";
+import "../types/types.ts";
+import { Color, Length, Rule, Selector, Stylesheet, Unit } from "../types/types.ts";
 
 class CssParser {
   pos: number;
@@ -53,17 +55,17 @@ class CssParser {
     switch (sectorHeadSymbol) {
       case ".":
         return {
-          type: "class",
+          type: SELECTOR_TYPE.CLASS,
           name: selectorName,
         };
       case "#":
         return {
-          type: "id",
+          type: SELECTOR_TYPE.ID,
           name: selectorName,
         };
       default:
         return {
-          type: "tag",
+          type: SELECTOR_TYPE.TAG,
           name: selectorName,
         };
     }
