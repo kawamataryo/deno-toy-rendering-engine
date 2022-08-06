@@ -14,47 +14,52 @@ class LayoutBox {
   }
 
   getInlineContainer(): LayoutBox {
-    if(this.boxType === BOX_TYPE.INLINE || this.boxType === BOX_TYPE.ANONYMOUS) {
-      return this;
-    }
-    if(this.boxType === BOX_TYPE.BLOCK) {
-      if(this.children.length > 0 && this.children[this.children.length - 1].boxType === BOX_TYPE.ANONYMOUS) {
+    switch (this.boxType) {
+      case BOX_TYPE.INLINE:
+        return this;
+      case BOX_TYPE.ANONYMOUS:
+        return this;
+      case BOX_TYPE.BLOCK: {
+        if (this.children.length > 0 && this.children[this.children.length - 1].boxType === BOX_TYPE.ANONYMOUS) {
+          return this.children[this.children.length - 1]
+        }
         const anonymousChild = new LayoutBox(BOX_TYPE.ANONYMOUS, null);
-        this.children.push(new LayoutBox(BOX_TYPE.ANONYMOUS, null));
+        this.children.push(anonymousChild);
         return anonymousChild;
       }
-      return this.children[this.children.length - 1]
+      default:
+        throw new Error("layout box has to unknown box type");
     }
   }
 }
 
-const buildLayoutTree = (node: StyledNode): LayoutBox => {
-  let rootBox: LayoutBox
+export const buildLayoutTree = (node: StyledNode): LayoutBox => {
+  let rootBox: LayoutBox;
   switch (node.display()) {
-    case DISPLAY_TYPE.INLINE:
+    case DISPLAY_TYPE.BLOCK:
       rootBox = new LayoutBox(BOX_TYPE.BLOCK, node);
       break;
-    case DISPLAY_TYPE.BLOCK:
+    case DISPLAY_TYPE.INLINE:
       rootBox = new LayoutBox(BOX_TYPE.INLINE, node);
       break;
     default:
       throw new Error("Root node has to be either inline or block");
   }
 
-  node.children.forEach(n => {
+  node.children.forEach((n) => {
     switch (n.display()) {
-      case DISPLAY_TYPE.INLINE:
-        rootBox.children.push(buildLayoutTree(n));
-        break;
       case DISPLAY_TYPE.BLOCK:
         rootBox.children.push(buildLayoutTree(n));
+        break;
+      case DISPLAY_TYPE.INLINE:
+        rootBox.getInlineContainer().children.push(buildLayoutTree(n));
         break;
       case DISPLAY_TYPE.NONE:
         break;
       default:
         throw new Error("node has to unknown display type");
     }
-  })
+  });
 
-  return rootBox
-}
+  return rootBox;
+};

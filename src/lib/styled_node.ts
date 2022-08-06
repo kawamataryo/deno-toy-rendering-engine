@@ -1,5 +1,14 @@
-import { SELECTOR_TYPE } from './../constants.ts';
-import { DisplayType, PropertyMap, Selector, StyledNodeInterface, Stylesheet, ToyNode, ToyNodeType } from "../types/types.ts";
+import { SELECTOR_TYPE, TAG_DISPLAY_TYPE_MAP } from "./../constants.ts";
+import {
+  DisplayType,
+  PropertyMap,
+  Selector,
+  StyledNodeInterface,
+  Stylesheet,
+  ToyElement,
+  ToyNode,
+  ToyNodeType,
+} from "../types/types.ts";
 
 export const sortStylesheetByDetail = (stylesheet: Stylesheet): Stylesheet => {
   // split stylesheet per selector type
@@ -23,9 +32,15 @@ export const sortStylesheetByDetail = (stylesheet: Stylesheet): Stylesheet => {
   return {
     // sort by selectors details
     rules: [
-      ...stylesheetHash[SELECTOR_TYPE.TAG] ? stylesheetHash[SELECTOR_TYPE.TAG].rules : [],
-      ...stylesheetHash[SELECTOR_TYPE.CLASS] ? stylesheetHash[SELECTOR_TYPE.CLASS].rules : [],
-      ...stylesheetHash[SELECTOR_TYPE.ID] ? stylesheetHash[SELECTOR_TYPE.ID].rules : [],
+      ...stylesheetHash[SELECTOR_TYPE.TAG]
+        ? stylesheetHash[SELECTOR_TYPE.TAG].rules
+        : [],
+      ...stylesheetHash[SELECTOR_TYPE.CLASS]
+        ? stylesheetHash[SELECTOR_TYPE.CLASS].rules
+        : [],
+      ...stylesheetHash[SELECTOR_TYPE.ID]
+        ? stylesheetHash[SELECTOR_TYPE.ID].rules
+        : [],
     ],
   };
 };
@@ -46,18 +61,31 @@ export class StyledNode implements StyledNodeInterface {
   }
 
   display(): DisplayType {
-    return this.value('display') ? this.value('display') as DisplayType : "inline"
+    if(this.value("display")) {
+      return this.value("display") as DisplayType;
+    }
+    if(this.isElementNode(this.node) && this.node.tagName in TAG_DISPLAY_TYPE_MAP) {
+      return (TAG_DISPLAY_TYPE_MAP as any)[this.node.tagName];
+    }
+    return "inline";
+  }
+
+  private isElementNode(node: ToyNodeType): node is ToyElement{
+    return typeof node !== "string"
   }
 
   private matches(nodeType: ToyNodeType, selector: Selector): boolean {
     if (typeof nodeType === "string") {
       return false;
     }
-    if (selector.type === SELECTOR_TYPE.TAG && nodeType.tagName === selector.name) {
+    if (
+      selector.type === SELECTOR_TYPE.TAG && nodeType.tagName === selector.name
+    ) {
       return true;
     }
     if (
-      selector.type === SELECTOR_TYPE.ID && nodeType.attributes?.id === selector.name
+      selector.type === SELECTOR_TYPE.ID &&
+      nodeType.attributes?.id === selector.name
     ) {
       return true;
     }

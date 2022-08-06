@@ -1,5 +1,5 @@
 import { assert } from "std/testing/asserts";
-import { ToyNode } from "../types/types.ts";
+import { TAG_NAME, ToyNode } from "../types/types.ts";
 
 const createTextNode = (text: string): ToyNode => {
   return {
@@ -9,7 +9,7 @@ const createTextNode = (text: string): ToyNode => {
 };
 
 const createElement = (
-  name: string,
+  name: TAG_NAME,
   attributes: Record<string, string>,
   children: ToyNode[],
 ): ToyNode => {
@@ -74,8 +74,8 @@ class HtmlParser {
     this.consumeWhile((c) => /\s/.test(c));
   }
 
-  private parseTagName(): string {
-    return this.consumeWhile((c) => /\w/.test(c));
+  private parseTagName(): TAG_NAME {
+    return this.consumeWhile((c) => /\w/.test(c)) as TAG_NAME;
   }
 
   private parseNode(): ToyNode {

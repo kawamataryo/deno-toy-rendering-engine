@@ -1,7 +1,14 @@
 import { assert } from "std/testing/asserts";
 import { SELECTOR_TYPE } from "../constants.ts";
 import "../types/types.ts";
-import { Color, Length, Rule, Selector, Stylesheet, Unit } from "../types/types.ts";
+import {
+  Color,
+  Length,
+  Rule,
+  Selector,
+  Stylesheet,
+  Unit,
+} from "../types/types.ts";
 
 class CssParser {
   pos: number;

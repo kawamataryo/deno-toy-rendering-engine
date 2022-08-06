@@ -1,9 +1,9 @@
-import { BOX_TYPE, DISPLAY_TYPE, SELECTOR_TYPE } from "../constants.ts";
+import { BOX_TYPE, DISPLAY_TYPE, SELECTOR_TYPE, TAG_DISPLAY_TYPE_MAP } from "../constants.ts";
 
 export type ToyText = string;
 
 export type ToyElement = {
-  tagName: string;
+  tagName: TAG_NAME;
   attributes: Record<string, string>;
 };
 
@@ -89,6 +89,8 @@ export type Box = {
   node: StyledNodeInterface;
 };
 
-export type BoxType = typeof BOX_TYPE[keyof typeof BOX_TYPE]
+export type BoxType = typeof BOX_TYPE[keyof typeof BOX_TYPE];
 
-export type DisplayType = typeof DISPLAY_TYPE[keyof typeof DISPLAY_TYPE]
+export type DisplayType = typeof DISPLAY_TYPE[keyof typeof DISPLAY_TYPE];
+
+export type TAG_NAME = keyof typeof TAG_DISPLAY_TYPE_MAP;
