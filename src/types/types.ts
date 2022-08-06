@@ -1,4 +1,9 @@
-import { BOX_TYPE, DISPLAY_TYPE, SELECTOR_TYPE, TAG_DISPLAY_TYPE_MAP } from "../constants.ts";
+import {
+  BOX_TYPE,
+  DISPLAY_TYPE,
+  SELECTOR_TYPE,
+  TAG_DISPLAY_TYPE_MAP,
+} from "../constants.ts";
 
 export type ToyText = string;
 

@@ -15,7 +15,7 @@ Deno.test("buildLayoutTree", async (t) => {
     assertEquals(result.boxType, BOX_TYPE.BLOCK);
     assertEquals(result.children, []);
     assertEquals(result.node, styledNode);
-  })
+  });
 
   await t.step("build nested block node", () => {
     const styledNode = buildStyledTree(
@@ -33,7 +33,7 @@ Deno.test("buildLayoutTree", async (t) => {
     assertEquals(result.children[0].boxType, BOX_TYPE.BLOCK);
     assertEquals(result.children[0].boxType, BOX_TYPE.BLOCK);
     assertEquals(result.node, styledNode);
-  })
+  });
 
   await t.step("build nested inline node", () => {
     const styledNode = buildStyledTree(
@@ -54,9 +54,15 @@ Deno.test("buildLayoutTree", async (t) => {
     assertEquals(result.children[0].children[0].boxType, BOX_TYPE.INLINE);
     assertEquals(result.children[0].children[0].children, []);
     assertEquals(result.children[0].children[1].boxType, BOX_TYPE.INLINE);
-    assertEquals(result.children[0].children[1].children[0].boxType, BOX_TYPE.INLINE);
-    assertEquals(result.children[0].children[1].children[0].node?.node, 'hello world');
+    assertEquals(
+      result.children[0].children[1].children[0].boxType,
+      BOX_TYPE.INLINE,
+    );
+    assertEquals(
+      result.children[0].children[1].children[0].node?.node,
+      "hello world",
+    );
     assertEquals(result.children[0].children[2].boxType, BOX_TYPE.INLINE);
     assertEquals(result.children[0].children[2].boxType, BOX_TYPE.INLINE);
-  })
+  });
 });

@@ -20,8 +20,11 @@ class LayoutBox {
       case BOX_TYPE.ANONYMOUS:
         return this;
       case BOX_TYPE.BLOCK: {
-        if (this.children.length > 0 && this.children[this.children.length - 1].boxType === BOX_TYPE.ANONYMOUS) {
-          return this.children[this.children.length - 1]
+        if (
+          this.children.length > 0 &&
+          this.children[this.children.length - 1].boxType === BOX_TYPE.ANONYMOUS
+        ) {
+          return this.children[this.children.length - 1];
         }
         const anonymousChild = new LayoutBox(BOX_TYPE.ANONYMOUS, null);
         this.children.push(anonymousChild);

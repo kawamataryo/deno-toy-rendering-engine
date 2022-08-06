@@ -63,4 +63,4 @@ export const TAG_DISPLAY_TYPE_MAP = {
   "main": DISPLAY_TYPE.BLOCK,
   "nav": DISPLAY_TYPE.BLOCK,
   "details": DISPLAY_TYPE.BLOCK,
-}
+};

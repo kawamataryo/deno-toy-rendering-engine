@@ -61,17 +61,19 @@ export class StyledNode implements StyledNodeInterface {
   }
 
   display(): DisplayType {
-    if(this.value("display")) {
+    if (this.value("display")) {
       return this.value("display") as DisplayType;
     }
-    if(this.isElementNode(this.node) && this.node.tagName in TAG_DISPLAY_TYPE_MAP) {
-      return (TAG_DISPLAY_TYPE_MAP as any)[this.node.tagName];
+    if (
+      this.isElementNode(this.node) && this.node.tagName in TAG_DISPLAY_TYPE_MAP
+    ) {
+      return TAG_DISPLAY_TYPE_MAP[this.node.tagName];
     }
     return "inline";
   }
 
-  private isElementNode(node: ToyNodeType): node is ToyElement{
-    return typeof node !== "string"
+  private isElementNode(node: ToyNodeType): node is ToyElement {
+    return typeof node !== "string";
   }
 
   private matches(nodeType: ToyNodeType, selector: Selector): boolean {
