@@ -42,3 +42,5 @@ deno lint
 - 2022/07/30: refactor to Deno way
 - 2022/07/30: create Styled
   Tree([reference](https://limpet.net/mbrubeck/2014/08/23/toy-layout-engine-4-style.html))
+- 2022/08/07: create Layout
+  Box([reference](https://limpet.net/mbrubeck/2014/09/17/toy-layout-engine-6-block.html))
