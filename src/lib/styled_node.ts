@@ -8,6 +8,7 @@ import {
   ToyElement,
   ToyNode,
   ToyNodeType,
+  Value,
 } from "../types/types.ts";
 
 export const sortStylesheetByDetail = (stylesheet: Stylesheet): Stylesheet => {
@@ -58,6 +59,10 @@ export class StyledNode implements StyledNodeInterface {
 
   value(name: string) {
     return this.specificValues[name] ? this.specificValues[name] : null;
+  }
+
+  lookup(name: string, fallbackName: string, defaultValue: Value): Value {
+    return this.value(name) || this.value(fallbackName) || defaultValue;
   }
 
   display(): DisplayType {
