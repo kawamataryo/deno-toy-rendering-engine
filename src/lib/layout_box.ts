@@ -160,6 +160,7 @@ export class LayoutBox {
       return total + toPx(value);
     }, 0);
 
+
     const autoSpace = calculateAutoSpaceToWidth(
       {
         width,
@@ -250,6 +251,13 @@ export class LayoutBox {
       );
     }
   }
+}
+
+export const layoutTree = (styledNode: StyledNode, containingBlock: Dimensions): LayoutBox => {
+  containingBlock.content.height = 0;
+  const rootBox = buildLayoutTree(styledNode)
+  rootBox.layout(containingBlock);
+  return rootBox;
 }
 
 export const buildLayoutTree = (node: StyledNode): LayoutBox => {

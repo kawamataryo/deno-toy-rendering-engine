@@ -1,5 +1,6 @@
 {
   "imports": {
-    "std/testing/asserts": "https://deno.land/std@0.150.0/testing/asserts.ts"
+    "std/testing/asserts": "https://deno.land/std@0.150.0/testing/asserts.ts",
+    "x/canvas/mod": "https://deno.land/x/canvas@v1.4.1/mod.ts"
   }
 }

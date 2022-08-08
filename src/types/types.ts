@@ -1,5 +1,6 @@
 import {
   BOX_TYPE,
+  DISPLAY_COMMAND_TYPE,
   DISPLAY_TYPE,
   SELECTOR_TYPE,
   TAG_DISPLAY_TYPE_MAP,
@@ -99,3 +100,11 @@ export type BoxType = typeof BOX_TYPE[keyof typeof BOX_TYPE];
 export type DisplayType = typeof DISPLAY_TYPE[keyof typeof DISPLAY_TYPE];
 
 export type TAG_NAME = keyof typeof TAG_DISPLAY_TYPE_MAP;
+
+export type DisplayCommand = {
+  type: typeof DISPLAY_COMMAND_TYPE[keyof typeof DISPLAY_COMMAND_TYPE];
+  color: Color;
+  rect: Rect;
+};
+
+export type DisplayList = DisplayCommand[];

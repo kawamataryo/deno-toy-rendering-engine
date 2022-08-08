@@ -91,3 +91,7 @@ export const DEFAULT_DIMENSIONS = {
     bottom: 0,
   },
 };
+
+export const DISPLAY_COMMAND_TYPE = {
+  SOLID_COLOR: "solid_color",
+};
