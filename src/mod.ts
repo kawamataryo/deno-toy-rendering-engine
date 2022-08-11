@@ -11,7 +11,7 @@ const css = await Deno.readTextFile("./src/source/style.css");
 
 const initialContainingBlock = {
   ...DEFAULT_DIMENSIONS,
-  content: { x: 0, y: 0, width: 10, height: 10 },
+  content: { x: 0, y: 0, width: 100, height: 100 },
 };
 
 const rootNode = parseHtml(html);
