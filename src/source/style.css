@@ -1,28 +1,15 @@
-.a {
+.wrapper {
+  margin: 1px;
+  padding: 1px;
   background-color: #ff0000;
-  padding: 100px;
 }
-.b {
-  background-color: #ffa500;
-  padding: 50px;
-}
-.c {
+.inner {
+  padding: 1px;
   background-color: #ffff00;
-  padding: 50px;
+  border-width: 1px;
+  border-color: #ffa500;
 }
-.d {
+.inner-inner {
+  padding: 1px;
   background-color: #008000;
-  padding: 50px;
-}
-.e {
-  background-color: #0000ff;
-  padding: 50px;
-}
-.f {
-  background-color: #4b0082;
-}
-.g {
-  background-color: #800080;
-  padding: 30px;
-  width: 60px;
 }
