@@ -2,7 +2,7 @@
   "tasks": {
     "test": "deno test --importmap import_maps.json",
     "check": "deno check --importmap import_maps.json src/mod.ts",
-    "run": "deno run --allow-write --importmap import_maps.json src/mod.ts",
-    "run:watch": "deno run --watch --allow-write --importmap import_maps.json src/mod.ts"
+    "run": "deno run --allow-write --allow-read --importmap import_maps.json src/mod.ts",
+    "run:watch": "deno run --watch --allow-read --allow-write --importmap import_maps.json src/mod.ts"
   }
 }

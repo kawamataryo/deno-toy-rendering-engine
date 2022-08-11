@@ -6,28 +6,11 @@ import { createCanvas } from "x/canvas/mod";
 import { paint } from "./lib/painting.ts";
 import { DEFAULT_DIMENSIONS } from "./constants.ts";
 
-const html = `
-<div class="a">
-  <div class="b">
-  </div>
-</div>
-`
-
-const css = `
-.a {
-  background-color: #ff0000;
-  height: 100px;
-  width: 150px;
-}
-.b {
-  background-color: #ffa500;
-  width: 30px;
-  height: 30px;
-}
-`
+const html = await Deno.readTextFile("./src/source/index.html");
+const css = await Deno.readTextFile("./src/source/style.css")
 
 const initialContainingBlock = {
-  ...DEFAULT_DIMENSIONS , content: { x: 0, y: 0, width: 800, height: 600 }
+  ...DEFAULT_DIMENSIONS , content: { x: 0, y: 0, width: 800, height: 800 }
 }
 
 const rootNode = parseHtml(html);

@@ -141,10 +141,9 @@ export class Canvas {
         const x0 = clamp(rect.x, 0, this.width);
         const y0 = clamp(rect.y, 0, this.height);
         const x1 = clamp(rect.x + rect.width, 0, this.width);
-        const y1 = clamp(rect.x + rect.height, 0, this.height);
-
-        for (const y of range(y0 + y1, y0)) {
-          for (const x of range(x0 + x1, x0)) {
+        const y1 = clamp(rect.y + rect.height, 0, this.height);
+        for (const y of range(y1 - y0, y0)) {
+          for (const x of range(x1 - x0, x0)) {
             this.pixels[x + y * this.width] = color;
           }
         }
