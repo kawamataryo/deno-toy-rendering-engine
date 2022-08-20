@@ -5,12 +5,6 @@ export const config: Configuration = {
   darkMode: "class",
   mode: "silent",
   theme: {
-    fontFamily: {
-      sans:
-        "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI'",
-      canveat: ["Caveat", "cursive"],
-      silkscreen: ["Silkscreen", 'cursive']
-    },
     extend: {
       spacing: {
         128: "32rem",

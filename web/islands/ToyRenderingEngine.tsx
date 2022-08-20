@@ -5,17 +5,13 @@ import { Fragment, h } from "preact";
 import { tw } from "@twind";
 import { useEffect, useState } from "preact/hooks";
 import BrowserMockup from "../components/BrowserMockup.tsx";
-import {
-  btnStyleBlack,
-  btnStyleWhite,
-  textareaStyle,
-} from "../styles/style.ts";
+import { btnStyleBlue, btnStyleWhite } from "../styles/style.ts";
 import { useToyRenderingEngine } from "../hooks/useToyRenderingEngine.ts";
 
 import Prism from "prismjs";
 import "https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-css.min.js";
-import { CodeBlock } from "../components/CodeBlock.tsx";
 import RenderProcessGuide from "../components/RenderProcessGuide.tsx";
+import { CodeBlockWithTextarea } from "../components/CodeBlockWithTextarea.tsx";
 Prism.manual = true;
 
 export default function ToyBrowser() {
@@ -31,11 +27,12 @@ export default function ToyBrowser() {
     styleTreeStr,
     layoutRootStr,
     canvasDataStr,
+    CANVAS_HEIGHT,
+    CANVAS_WIDTH,
   } = useToyRenderingEngine();
   const [shouldShowDetail, setShouldShowDetail] = useState(false);
 
   useEffect(() => {
-    fillCanvas();
     Prism.highlightAll();
   }, []);
 
@@ -43,25 +40,21 @@ export default function ToyBrowser() {
     <>
       <div class={tw`p-4 mx-auto max-w-screen-md`}>
         <div class={tw`grid grid grid-cols-2 gap-4`}>
-          <label class={tw`text-center`}>
-            HTML
-            <textarea
-              class={tw`${textareaStyle}`}
-              value={html}
-              onChange={(e: any) => setHtml(e.target.value)}
-            />
-          </label>
-          <label class={tw`text-center`}>
-            CSS
-            <textarea
-              class={tw`${textareaStyle}`}
-              value={css}
-              onChange={(e: any) => setCss(e.target.value)}
-            />
-          </label>
+          <CodeBlockWithTextarea
+            code={html}
+            setCode={setHtml}
+            language="html"
+            label="HTML"
+          />
+          <CodeBlockWithTextarea
+            code={css}
+            setCode={setCss}
+            language="css"
+            label="CSS"
+          />
         </div>
-        <div class={tw`mt-4 text-center flex gap-4 justify-center`}>
-          <button class={tw`${btnStyleBlack}`} onClick={() => fillCanvas()}>
+        <div class={tw`mt-4 text-center grid grid-row-2 gap-4 justify-center`}>
+          <button class={tw`${btnStyleBlue}`} onClick={() => fillCanvas()}>
             🎨 Render
           </button>
           <button
@@ -88,12 +81,15 @@ export default function ToyBrowser() {
         />
       </div>
       <div class={tw`p-4 mx-auto max-w-screen-md`}>
-        <div class={tw`mt-8`}>
-          <BrowserMockup>
-            <canvas id="canvas" ref={canvasRef} width="700" height="400">
-            </canvas>
-          </BrowserMockup>
-        </div>
+        <BrowserMockup>
+          <canvas
+            id="canvas"
+            ref={canvasRef}
+            width={CANVAS_WIDTH}
+            height={CANVAS_HEIGHT}
+          >
+          </canvas>
+        </BrowserMockup>
       </div>
     </>
   );

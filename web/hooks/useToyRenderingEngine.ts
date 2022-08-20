@@ -27,18 +27,18 @@ const DEFAULT_CSS = `
 }
 `.trim();
 
-const CANVAS_WIDTH = 700;
-const CANVAS_HEIGHT = 400;
-
-const serializer = (obj: unknown) => {
-  return JSON.stringify(obj, null, 2);
-};
-
-const clearCanvas = (ctx: CanvasRenderingContext2D) => {
-  ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-};
-
 export const useToyRenderingEngine = () => {
+  const CANVAS_WIDTH = 730;
+  const CANVAS_HEIGHT = 400;
+
+  const serializer = (obj: unknown) => {
+    return JSON.stringify(obj, null, 2);
+  };
+
+  const clearCanvas = (ctx: CanvasRenderingContext2D) => {
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  };
+
   const [html, setHtml] = useState(DEFAULT_HTML);
   const [css, setCss] = useState(DEFAULT_CSS);
   const [parsedHtmlStr, setParsedHtmlStr] = useState("");
@@ -113,5 +113,7 @@ export const useToyRenderingEngine = () => {
     styleTreeStr,
     layoutRootStr,
     canvasDataStr,
+    CANVAS_HEIGHT,
+    CANVAS_WIDTH,
   };
 };

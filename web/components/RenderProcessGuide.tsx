@@ -2,7 +2,7 @@
 /** @jsxFrag Fragment */
 
 import { Fragment, h } from "preact";
-import { tw } from "../utils/twind.ts";
+import { tw } from "@twind";
 import { CodeBlock } from "./CodeBlock.tsx";
 
 export default function RenderProcessGuide({
@@ -25,13 +25,9 @@ export default function RenderProcessGuide({
   return (
     <>
       <div class={tw`p-4 my-4 mx-auto max-w-screen-md`}>
-        <div class={tw`grid grid grid-cols-2 gap-4`}>
-          <CodeBlock code={html} language="html" label="HTML" />
-          <CodeBlock code={css} language="css" label="CSS" />
-        </div>
         <div class={tw`grid grid grid-cols-4 gap-4`}>
           <div
-            class={tw`text-[15px] col-start-2 col-end-4 border-x-4 border-gray-400 h-20 flex items-center justify-center text-2xl text-gray-400`}
+            class={tw`text-md col-start-2 col-end-4 border-x-4 border-gray-400 h-20 flex items-center justify-center text-gray-400`}
           >
             Parse
           </div>
@@ -46,12 +42,12 @@ export default function RenderProcessGuide({
         </div>
         <div class={tw`grid grid grid-cols-4`}>
           <div
-            class={tw`text-[15px] col-start-2 col-end-4 border-x-4 border-b-4 border-gray-400  h-20 flex items-center justify-center text-2xl text-gray-400`}
+            class={tw`text-md col-start-2 col-end-4 border-x-4 border-b-4 border-gray-400  h-20 flex items-center justify-center text-md text-gray-400`}
           >
             Style calculation
           </div>
           <div
-            class={tw`col-start-1 col-end-3 border-r-4 border-gray-400 h-20 flex items-center justify-center text-2xl`}
+            class={tw`col-start-1 col-end-3 border-r-4 border-gray-400 h-20 flex items-center justify-center text-md`}
           >
           </div>
         </div>
@@ -66,7 +62,7 @@ export default function RenderProcessGuide({
         </div>
         <div class={tw`grid grid grid-cols-4`}>
           <div
-            class={tw`text-[15px] col-start-1 col-end-3 border-r-4 border-gray-400 h-20 flex items-center justify-right text-2xl pr-4 text-gray-400`}
+            class={tw`text-md col-start-1 col-end-3 border-r-4 border-gray-400 h-20 flex items-center justify-right text-md pr-4 text-gray-400`}
           >
             Layout
           </div>
@@ -82,7 +78,7 @@ export default function RenderProcessGuide({
         </div>
         <div class={tw`grid grid grid-cols-4`}>
           <div
-            class={tw`text-[15px] col-start-1 col-end-3 border-r-4 border-gray-400 h-20 flex items-center justify-right text-2xl pr-4 text-gray-400`}
+            class={tw`text-md col-start-1 col-end-3 border-r-4 border-gray-400 h-20 flex items-center justify-right text-md pr-4 text-gray-400`}
           >
             Rasterization
           </div>

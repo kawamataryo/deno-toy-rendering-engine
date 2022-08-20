@@ -1,0 +1,19 @@
+html, body {
+  height: 100%;
+  background-color: rgba(31,41,55,255);
+}
+
+.code-block-textarea {
+  font-family: Consolas,Monaco,'Andale Mono',monospace;
+  line-height: 1.5;
+  caret-color: #fff;
+  color: transparent;
+  height: 300px;
+  width: 100%;
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  padding: 12px;
+  background: transparent;
+  font-size: 12px;
+}
