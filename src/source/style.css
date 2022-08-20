@@ -1,15 +1,15 @@
 .wrapper {
-  margin: 10px;
-  padding: 10px;
-  background-color: #ff0000;
+  background-color: #364F6B;
 }
-.inner {
-  padding: 10px;
-  background-color: #ffff00;
-  border-width: 10px;
-  border-color: #ffa500;
+.inner-1 {
+  background-color: #3FC1C9;
 }
-.inner-inner {
-  padding: 10px;
-  background-color: #008000;
+.inner-2 {
+  background-color: #F5F5F5;
+}
+.inner-3 {
+  background-color: #FC5185;
+}
+* {
+  padding: 40px;
 }

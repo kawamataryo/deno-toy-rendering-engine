@@ -5,7 +5,9 @@ A simple HTML rendering engine made by Deno. Created based on
 
 Demo site is here. It is created by [fresh](https://fresh.deno.dev/).
 
-https://user-images.githubusercontent.com/11070996/185726623-a8be3e21-6275-4b76-b23c-b9ad5dd797df.mp4
+https://deno-toy-rendering-engine.deno.dev/
+
+https://user-images.githubusercontent.com/11070996/185742834-e2d5a759-c1e1-445e-96f2-8e6aada3dc4d.mp4
 
 ## Development
 
