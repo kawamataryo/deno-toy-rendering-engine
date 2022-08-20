@@ -82,12 +82,19 @@ Deno.test("createStyledTree", async (t) => {
           .class {
             color: green;
           }
+          * {
+            padding: 50px;
+          }
         `,
       },
       expected: {
         node: { tagName: "h1", attributes: { id: "id", class: "class" } },
         specificValues: {
           color: "blue",
+          padding: [
+            50,
+            "px",
+          ],
         },
         children: [],
       },
@@ -111,6 +118,9 @@ Deno.test("createStyledTree", async (t) => {
           p {
             display: inline-block;
           }
+          * {
+            padding: 50px;
+          }
         `,
       },
       expected: {
@@ -123,6 +133,10 @@ Deno.test("createStyledTree", async (t) => {
             b: 0,
             a: 255,
           },
+          padding: [
+            50,
+            "px",
+          ],
         },
         children: [
           {
@@ -134,8 +148,16 @@ Deno.test("createStyledTree", async (t) => {
                 b: 0,
                 a: 255,
               },
+              padding: [
+                50,
+                "px",
+              ],
             },
-            children: [{ node: "My Blog", specificValues: {}, children: [] }],
+            children: [{
+              node: "My Blog",
+              specificValues: {},
+              children: [],
+            }],
           },
           {
             node: { tagName: "p", attributes: { class: "subtitle" } },
@@ -147,6 +169,10 @@ Deno.test("createStyledTree", async (t) => {
                 a: 255,
               },
               display: "inline-block",
+              padding: [
+                50,
+                "px",
+              ],
             },
             children: [{
               node: "learning log",

@@ -33,6 +33,9 @@ export const sortStylesheetByDetail = (stylesheet: Stylesheet): Stylesheet => {
   return {
     // sort by selectors details
     rules: [
+      ...stylesheetHash[SELECTOR_TYPE.UNIVERSAL]
+        ? stylesheetHash[SELECTOR_TYPE.UNIVERSAL].rules
+        : [],
       ...stylesheetHash[SELECTOR_TYPE.TAG]
         ? stylesheetHash[SELECTOR_TYPE.TAG].rules
         : [],
@@ -85,24 +88,21 @@ export class StyledNode implements StyledNodeInterface {
     if (typeof nodeType === "string") {
       return false;
     }
-    if (
-      selector.type === SELECTOR_TYPE.TAG && nodeType.tagName === selector.name
-    ) {
-      return true;
+    switch (true) {
+      case selector.type === SELECTOR_TYPE.UNIVERSAL:
+        return true;
+      case selector.type === SELECTOR_TYPE.TAG &&
+        nodeType.tagName === selector.name:
+        return true;
+      case selector.type === SELECTOR_TYPE.ID &&
+        nodeType.attributes?.id === selector.name:
+        return true;
+      case selector.type === SELECTOR_TYPE.CLASS &&
+        nodeType.attributes?.class?.split(" ").some((c) => c === selector.name):
+        return true;
+      default:
+        return false;
     }
-    if (
-      selector.type === SELECTOR_TYPE.ID &&
-      nodeType.attributes?.id === selector.name
-    ) {
-      return true;
-    }
-    if (
-      selector.type === SELECTOR_TYPE.CLASS &&
-      nodeType.attributes?.class?.split(" ").some((c) => c === selector.name)
-    ) {
-      return true;
-    }
-    return false;
   }
 
   private createSpecificValues(

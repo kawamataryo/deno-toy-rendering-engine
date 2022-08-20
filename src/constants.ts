@@ -2,6 +2,7 @@ export const SELECTOR_TYPE = {
   TAG: "tag",
   CLASS: "class",
   ID: "id",
+  UNIVERSAL: "*",
 } as const;
 
 export const BOX_TYPE = {

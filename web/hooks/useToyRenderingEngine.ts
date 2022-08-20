@@ -8,20 +8,22 @@ import { paint } from "../../src/lib/painting.ts";
 
 const DEFAULT_HTML = `
 <div class="wrapper">
-  <div class="inner"></div>
+  <div class="inner-1">
+  </div>
+  <div class="inner-2"></div>
 </div>
 `.trim();
 
 const DEFAULT_CSS = `
-.wrapper {
+.wrapper, inner-1 {
   background-color: #13334c;
   border-color: #fd5f00;
-  border-width: 10px;
-  padding: 30px;
 }
-.inner {
+.inner-2 {
   background-color: #005792;
   border-color: #f6f6e9;
+}
+* {
   border-width: 10px;
   padding: 30px;
 }

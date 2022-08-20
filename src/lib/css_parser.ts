@@ -54,7 +54,7 @@ class CssParser {
   parseSelector(): Selector {
     const nextChar = this.nextChar();
     let sectorHeadSymbol = "";
-    if (nextChar === "." || nextChar === "#") {
+    if (nextChar === "." || nextChar === "#" || nextChar === "*") {
       sectorHeadSymbol = this.consumeChar();
     }
     const selectorName = this.consumeWhile((char) => /[\w_-]/.test(char));
@@ -70,6 +70,11 @@ class CssParser {
           type: SELECTOR_TYPE.ID,
           name: selectorName,
         };
+      case "*":
+        return {
+          type: SELECTOR_TYPE.UNIVERSAL,
+          name: selectorName,
+        };
       default:
         return {
           type: SELECTOR_TYPE.TAG,
@@ -82,6 +87,10 @@ class CssParser {
     const selectors: Selector[] = [];
     while (true) {
       this.consumeWhitespace();
+      assert(
+        this.nextChar() !== "}" && this.nextChar() !== ":" &&
+          this.nextChar() !== ";",
+      );
       if (this.nextChar() === "{") {
         break;
       }

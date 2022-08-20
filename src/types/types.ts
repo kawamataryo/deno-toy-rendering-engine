@@ -37,7 +37,7 @@ export type Rule = {
 export type SelectorType = typeof SELECTOR_TYPE[keyof typeof SELECTOR_TYPE];
 
 export type Selector = {
-  type: "tag" | "id" | "class";
+  type: typeof SELECTOR_TYPE[keyof typeof SELECTOR_TYPE];
   name: string;
 };
 

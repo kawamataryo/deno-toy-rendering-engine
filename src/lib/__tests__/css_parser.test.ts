@@ -37,6 +37,9 @@ Deno.test("multiple css", () => {
           font-size: 1em;
           background: #ffee12;
         }
+        * {
+          padding: 50px;
+        }
   `);
   assertEquals(result, {
     rules: [
@@ -86,6 +89,23 @@ Deno.test("multiple css", () => {
               g: 238,
               r: 255,
             },
+          },
+        ],
+      },
+      {
+        declarations: [
+          {
+            name: "padding",
+            value: [
+              50,
+              "px",
+            ],
+          },
+        ],
+        selectors: [
+          {
+            name: "",
+            type: "*",
           },
         ],
       },
