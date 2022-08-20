@@ -47,7 +47,8 @@ export function CodeBlockWithTextarea(
           className="code-block-textarea"
           value={code}
           ref={textareaRef}
-          onInput={(e: any) => setCode(e.target.value)}
+          onInput={(e: { target: { value: string } }) =>
+            setCode(e.target.value)}
         />
       </div>
     </div>

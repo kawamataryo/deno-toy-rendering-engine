@@ -1,10 +1,9 @@
-# Deno Toy Browser Engine
+# Deno Toy Rendering Engine
 
 A simple HTML rendering engine made by Deno. Created based on
 "[Let's build a browser engine!](https://limpet.net/mbrubeck/2014/08/08/toy-layout-engine-1.html)"
 
-# Demo
-Here is the demo site created with [fresh](https://fresh.deno.dev/).
+Demo site is here. It is created by [fresh](https://fresh.deno.dev/).
 
 https://user-images.githubusercontent.com/11070996/185726623-a8be3e21-6275-4b76-b23c-b9ad5dd797df.mp4
 
