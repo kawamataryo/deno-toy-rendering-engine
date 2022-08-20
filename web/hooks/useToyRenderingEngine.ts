@@ -35,7 +35,7 @@ const DEFAULT_CSS = `
 `.trim();
 
 export const useToyRenderingEngine = () => {
-  const CANVAS_WIDTH = 730;
+  const CANVAS_WIDTH = 728;
   const CANVAS_HEIGHT = 400;
 
   const serializer = (obj: unknown) => {
