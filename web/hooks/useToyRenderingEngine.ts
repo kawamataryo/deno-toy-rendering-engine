@@ -9,23 +9,28 @@ import { paint } from "../../src/lib/painting.ts";
 const DEFAULT_HTML = `
 <div class="wrapper">
   <div class="inner-1">
+    <div class="inner-2">
+      <div class="inner-3"></div>
+    </div>
   </div>
-  <div class="inner-2"></div>
 </div>
 `.trim();
 
 const DEFAULT_CSS = `
-.wrapper, inner-1 {
-  background-color: #13334c;
-  border-color: #fd5f00;
+.wrapper {
+  background-color: #364F6B;
+}
+.inner-1 {
+  background-color: #3FC1C9;
 }
 .inner-2 {
-  background-color: #005792;
-  border-color: #f6f6e9;
+  background-color: #F5F5F5;
+}
+.inner-3 {
+  background-color: #FC5185;
 }
 * {
-  border-width: 10px;
-  padding: 30px;
+  padding: 40px;
 }
 `.trim();
 
